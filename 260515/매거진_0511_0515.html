@@ -1,0 +1,951 @@
+<style>
+@font-face {
+  font-family: 'Paperlogy';
+  src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy-8ExtraBold.woff2') format('woff2');
+  font-weight: 800; font-style: normal;
+}
+@font-face {
+  font-family: 'Paperlogy';
+  src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy-9Black.woff2') format('woff2');
+  font-weight: 900; font-style: normal;
+}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+
+.atcsr-wrap * { box-sizing: border-box; margin: 0; padding: 0; }
+.atcsr-wrap { font-family: 'Noto Sans KR', sans-serif; overflow-wrap: break-word; word-break: keep-all; }
+.atcsr-wrap a { text-decoration: none; color: inherit; }
+.atcsr-wrap img { display: block; width: 100%; object-fit: cover; }
+.atcsr-inner { max-width: 640px; margin: 0 auto; }
+
+.atcsr-featured-grid { display: block; padding: 0; }
+.atcsr-featured-card { margin-bottom: 16px; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); background: #f5f9fd; border: 1px solid #d7e8f5; display: flex; flex-direction: column; }
+.atcsr-featured-card > a { display: flex; flex-direction: column; flex: 1; }
+.atcsr-featured-visual { position: relative; height: 220px; overflow: hidden; }
+.atcsr-featured-visual img { height: 100%; width: 100%; object-fit: cover; }
+.atcsr-featured-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.05) 100%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 22px 24px;
+}
+.atcsr-featured-overlay .category {
+  display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 0.5px;
+  background: rgba(255,255,255,0.15); color: #fff; border-radius: 20px;
+  padding: 5px 12px; margin-bottom: 8px; width: fit-content;
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.25);
+}
+.atcsr-featured-overlay .title {
+  font-size: 22px; font-weight: 800; color: #fff; line-height: 1.45; letter-spacing: -0.3px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+.atcsr-featured-body { padding: 20px 22px 22px; display: flex; flex-direction: column; flex: 1; }
+.atcsr-featured-body .summary { font-size: 16px; color: #555; line-height: 1.9; margin-bottom: 14px; flex: 1; }
+.atcsr-featured-body .meta {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 13px; color: #333;
+}
+.atcsr-featured-body .meta .read-more { color: #0195df; font-weight: 600; font-size: 14px; }
+
+.atcsr-curation-grid {
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 0; margin-bottom: 4px;
+}
+.atcsr-curation-grid .atcsr-curation-thumb { width: 140px; min-width: 140px; object-fit: cover; flex-shrink: 0; display: block; }
+.atcsr-card-category { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; color: #555; margin-bottom: 8px; background: rgba(0,0,0,0.05); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(0,0,0,0.08); border-radius: 20px; padding: 5px 12px; }
+.atcsr-card-title { font-size: 16px; font-weight: 700; color: #111; line-height: 1.5; margin-bottom: 8px; }
+.atcsr-card-summary { font-size: 16px; color: #666; line-height: 1.8; margin-bottom: 12px; }
+.atcsr-card-meta { display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: #333; }
+
+.atcsr-curation-group { margin-bottom: 8px; }
+.atcsr-curation-group summary {
+  display: flex; align-items: center; gap: 8px; cursor: pointer;
+  font-size: 15px; font-weight: 700;
+  padding: 10px 0; list-style: none;
+}
+.atcsr-curation-group summary::-webkit-details-marker { display: none; }
+.atcsr-curation-group summary .count { font-size: 12px; font-weight: 500; color: #bbb; }
+.atcsr-curation-toggle {
+  margin-left: auto; font-size: 13px; font-weight: 600; color: #fff;
+  border-radius: 20px; padding: 4px 14px;
+}
+.atcsr-curation-toggle .atcsr-label-close { display: none; }
+.atcsr-curation-group[open] .atcsr-curation-toggle .atcsr-label-open { display: none; }
+.atcsr-curation-group[open] .atcsr-curation-toggle .atcsr-label-close { display: inline; }
+
+.atcsr-shared-file {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px; background: #fefcf3; border: 1px solid #f0e4b8;
+  border-radius: 12px; text-decoration: none; color: inherit;
+}
+.atcsr-shared-file-info { text-align: right; flex-shrink: 0; }
+
+.atcsr-contrib-label { font-size: 17px; font-weight: 700; color: #333; margin-bottom: 16px; }
+.atcsr-contrib-label strong { color: #FF5C35; font-weight: 900; }
+.atcsr-contrib-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  border: 1px solid; border-radius: 6px;
+  padding: 4px 10px; margin: 0 3px 5px 0;
+  font-size: 13px; font-weight: 600; color: #222;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.atcsr-contrib-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.atcsr-contrib-org { font-size: 12px; font-weight: 400; color: #888; margin-left: 2px; }
+
+.atcsr-header-vol { text-align: right; }
+.atcsr-header-bottom { display: flex; align-items: center; justify-content: space-between; }
+.atcsr-footer-text { text-align: right; }
+
+.atcsr-policy-briefing { margin-bottom: 8px; }
+.atcsr-policy-briefing summary {
+  display: flex; align-items: center; gap: 8px; cursor: pointer;
+  font-size: 15px; font-weight: 700; color: #5a6a7a;
+  padding: 14px 18px; list-style: none;
+  background: #f4f6f8; border: 1px solid #dde2e8; border-radius: 14px;
+}
+.atcsr-policy-briefing summary::-webkit-details-marker { display: none; }
+.atcsr-policy-toggle {
+  margin-left: auto; font-size: 13px; font-weight: 600; color: #fff;
+  background: #7a8a9a; border-radius: 20px; padding: 4px 14px;
+}
+.atcsr-policy-toggle .atcsr-label-close { display: none; }
+.atcsr-policy-briefing[open] summary { border-radius: 14px 14px 0 0; border-bottom: none; }
+.atcsr-policy-briefing[open] .atcsr-policy-toggle { background: #5a6a7a; }
+.atcsr-policy-briefing[open] .atcsr-policy-toggle .atcsr-label-open { display: none; }
+.atcsr-policy-briefing[open] .atcsr-policy-toggle .atcsr-label-close { display: inline; }
+
+@media (max-width: 480px) {
+  .atcsr-curation-grid a,
+  .atcsr-curation-grid > div > div { flex-direction: column; }
+  .atcsr-curation-grid .atcsr-curation-thumb { width: 100%; min-width: 100%; height: 180px; }
+  .atcsr-header-bottom { flex-direction: column; gap: 20px; align-items: center; text-align: center; }
+  .atcsr-header-vol { text-align: center; }
+  .atcsr-header-logo { flex-direction: column; align-items: center; text-align: center; margin-bottom: 8px; }
+  .atcsr-header-content { align-items: center; text-align: center; padding: 24px 20px 28px; gap: 28px; }
+  .atcsr-header-headline { text-align: center; font-size: 22px; margin-bottom: 24px; }
+  .atcsr-footer-inner { flex-direction: column; align-items: flex-start; }
+  .atcsr-footer-inner img { margin-bottom: 12px; }
+  .atcsr-footer-text { text-align: center; }
+  .atcsr-action-banner { flex-direction: column; }
+  .atcsr-action-banner > a { min-width: 0; }
+  .atcsr-footer { padding: 20px 16px 18px; }
+  .atcsr-shared-file { flex-direction: column; align-items: flex-start; }
+  .atcsr-shared-file-info { text-align: left; }
+}
+@media (min-width: 680px) {
+  .atcsr-inner { border-radius: 12px; margin: 24px auto; }
+  .atcsr-featured-grid { display: flex; gap: 14px; padding: 0; }
+  .atcsr-featured-card { flex: 1; min-width: 0; margin-bottom: 0; }
+}
+</style>
+<div class="atcsr-wrap">
+<div class="atcsr-inner">
+
+<!-- ============ 1. HEADER ============ -->
+<div style="position: relative; overflow: hidden;">
+  <div style="display: flex; height: 6px; position: relative; z-index: 2;">
+    <div style="flex: 1; background: #0195df;"></div>
+    <div style="flex: 1; background: #ffd200;"></div>
+    <div style="flex: 1; background: #71c168;"></div>
+  </div>
+  <div style="position: relative; min-height: 320px; background: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1280&h=600&fit=crop') center/cover no-repeat;">
+    <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.65) 100%);"></div>
+    <div class="atcsr-header-content" style="position: relative; z-index: 1; padding: 28px 28px 24px; display: flex; flex-direction: column; justify-content: space-between; min-height: 320px;">
+      <div class="atcsr-header-logo" style="display: flex; align-items: center; gap: 12px;">
+        <img src="https://raw.githubusercontent.com/all-that-csr/asset/main/logo/logo-typeB.png" alt="All-That CSR" style="width: 120px; height: auto; border-radius: 8px; background: rgba(255,255,255,0.9); padding: 6px 8px;">
+        <div>
+          <div style="font-family: 'Paperlogy', 'Noto Sans KR', sans-serif; font-weight: 900; font-size: 20px; color: #fff; letter-spacing: 3px; text-shadow: 0 1px 4px rgba(0,0,0,0.3);">ALL THAT CSR 매거진</div>
+          <div style="font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 2px;">커뮤니티로 만드는 사회적 책임</div>
+        </div>
+      </div>
+      <div>
+        <h1 class="atcsr-header-headline" style="font-size: 26px; font-weight: 900; color: #fff; line-height: 1.5; letter-spacing: -0.5px; margin: 0 0 16px; text-shadow: 0 2px 8px rgba(0,0,0,0.3);">명품은 구찌만 삽니다 — CSR도 진정성이 통화다</h1>
+        <div class="atcsr-header-bottom">
+          <div style="display: flex; gap: 12px;">
+            <div style="text-align: center;">
+              <div style="font-size: 20px; font-weight: 900; color: #fff;">155</div>
+              <div style="font-size: 11px; color: rgba(255,255,255,0.6);">메시지</div>
+            </div>
+            <div style="width: 1px; background: rgba(255,255,255,0.2);"></div>
+            <div style="text-align: center;">
+              <div style="font-size: 20px; font-weight: 900; color: #fff;">45</div>
+              <div style="font-size: 11px; color: rgba(255,255,255,0.6);">링크</div>
+            </div>
+            <div style="width: 1px; background: rgba(255,255,255,0.2);"></div>
+            <div style="text-align: center;">
+              <div style="font-size: 20px; font-weight: 900; color: #fff;">16</div>
+              <div style="font-size: 11px; color: rgba(255,255,255,0.6);">큐레이션</div>
+            </div>
+          </div>
+          <div class="atcsr-header-vol">
+            <div style="font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.9); letter-spacing: 1px;">Vol.7</div>
+            <div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 2px;">2026년 5월 2주차 · 5/11~5/15</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 2. 액션 배너 ============ -->
+<div class="atcsr-action-banner" style="display: flex; gap: 10px; padding: 20px 0 0;">
+  <a href="https://bit.ly/4uJVNCb" target="_blank" rel="noopener" style="flex: 1; display: flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #e8f5e3 0%, #f0faf0 100%); border: 1px solid #c8e6c0; border-radius: 12px; padding: 12px 14px; text-decoration: none; color: inherit;">
+    <span style="font-size: 20px; flex-shrink: 0;">🚀</span>
+    <div style="min-width: 0;">
+      <div style="font-size: 11px; font-weight: 700; color: #71c168; margin-bottom: 2px;">공모전</div>
+      <div style="font-size: 13px; font-weight: 700; color: #222; line-height: 1.4;">아산 비영리스타트업 도전 트랙 →</div>
+    </div>
+  </a>
+  <a href="https://forms.gle/vFk91numeoxEAVWW9" target="_blank" rel="noopener" style="flex: 1; display: flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #e8f5e3 0%, #f0faf0 100%); border: 1px solid #c8e6c0; border-radius: 12px; padding: 12px 14px; text-decoration: none; color: inherit;">
+    <span style="font-size: 20px; flex-shrink: 0;">📊</span>
+    <div style="min-width: 0;">
+      <div style="font-size: 11px; font-weight: 700; color: #71c168; margin-bottom: 2px;">교육</div>
+      <div style="font-size: 13px; font-weight: 700; color: #222; line-height: 1.4;">KoSIF Scope 3 실무 교육 →</div>
+    </div>
+  </a>
+</div>
+
+<!-- ============ 이번 주 대화 요약 ============ -->
+<div style="padding: 32px 0 0;">
+  <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 18px;">
+    <div style="width: 5px; height: 28px; background: #333; border-radius: 2px;"></div>
+    <div>
+      <span style="font-size: 20px; font-weight: 900; color: #333;">이번 주 대화 요약</span>
+      <div style="font-size: 13px; color: #aaa; margin-top: 4px;">링크 너머에서 나눈 이야기</div>
+    </div>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+
+    <!-- 올댓CSR 전체 -->
+    <div style="background: #f3fbf2; border-radius: 14px; padding: 14px 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.05);">
+      <div style="font-size: 11px; font-weight: 700; color: #3d8c35; background: #edf7ec; display: inline-block; padding: 2px 9px; border-radius: 20px; margin-bottom: 10px;">올댓CSR 전체</div>
+      <div style="display: flex; gap: 8px; align-items: flex-start;">
+        <div style="width: 32px; height: 32px; border-radius: 50%; background: #71c168; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff;">유</div>
+        <div style="flex: 1; min-width: 0;">
+          <div style="font-size: 11px; color: #999; margin-bottom: 4px;">유승권</div>
+          <div style="background: #edf7ec; border-radius: 0 12px 12px 12px; padding: 10px 14px; font-size: 13px; color: #222; line-height: 1.6; word-break: keep-all;">"CSR과 ESG를 기업의 선택적 자발적 책임이 아닌 국제 규범, 법제화하자는 흐름이 강조되고 있는 것입니다. 개인이든 기업이든 알아서 스스로 잘하면 얼마나 좋겠어요. 그렇게 안되니까 규제화하려고 하는 것이죠."</div>
+        </div>
+      </div>
+      <p style="font-size: 12px; color: #888; line-height: 1.65; margin-top: 9px; word-break: keep-all;">유승권님이 신동아 기고글에 대해 CSR·ESG의 본질을 짚는 날카로운 코멘트를 남기며 토론이 이어졌습니다. 남나현님(KoSIF)이 물 리스크 이슈브리프와 Scope 3 교육을 연이어 공유하며 실무 콘텐츠의 깊이를 더했습니다. 이종일님의 All that Jazz 에피소드가 훈훈한 반응을 끌어냈습니다.</p>
+    </div>
+
+    <!-- 사회공헌 -->
+    <div style="background: #f0f9ff; border-radius: 14px; padding: 14px 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.05);">
+      <div style="font-size: 11px; font-weight: 700; color: #0178b8; background: #e8f5fd; display: inline-block; padding: 2px 9px; border-radius: 20px; margin-bottom: 10px;">사회공헌</div>
+      <div style="display: flex; gap: 8px; align-items: flex-start;">
+        <div style="width: 32px; height: 32px; border-radius: 50%; background: #0195df; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff;">최</div>
+        <div style="flex: 1; min-width: 0;">
+          <div style="font-size: 11px; color: #999; margin-bottom: 4px;">최정숙</div>
+          <div style="background: #e8f5fd; border-radius: 0 12px 12px 12px; padding: 10px 14px; font-size: 13px; color: #222; line-height: 1.6; word-break: keep-all;">"문화예술 CSR도 이제는 얼마나 크게 후원했는가보다 어떤 이야기와 함께했는지가 더 중요해지고 있는 것 같습니다."</div>
+        </div>
+      </div>
+      <p style="font-size: 12px; color: #888; line-height: 1.65; margin-top: 9px; word-break: keep-all;">ART for ISSUE 37편에서 구찌 임팩트 어워드를 분석하며 문화예술 CSR의 새로운 방향을 논의했습니다. 이대우님이 프로보노 스킬 기반 자원봉사 인사이트를 공유하고, 번개모임 제안에 멤버들이 호응하며 오프라인 모임 기대감이 높아졌습니다.</p>
+    </div>
+
+    <!-- 지속가능경영 -->
+    <div style="background: #fefceb; border-radius: 14px; padding: 14px 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.05);">
+      <div style="font-size: 11px; font-weight: 700; color: #b8960a; background: #fdf6d8; display: inline-block; padding: 2px 9px; border-radius: 20px; margin-bottom: 10px;">지속가능경영</div>
+      <p style="font-size: 12px; color: #888; line-height: 1.65; margin-top: 4px; word-break: keep-all;">유창우님이 ECB 기후·자연 리스크 모범사례 보고서 2건(총 247p), EU ETS 벤치마크 개정 초안, AA1000 이해관계자 표준 개정 등 글로벌 ESG 규제 핵심 자료를 집중 큐레이션했습니다. 윤지현님이 IOM 세계환경의날 토크콘서트를 안내하며 기후-이주 연결 주제를 소개했습니다.</p>
+    </div>
+
+    <!-- 임팩트투자 -->
+    <div style="background: #fff8f5; border-radius: 14px; padding: 14px 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.05);">
+      <div style="font-size: 11px; font-weight: 700; color: #d94f20; background: #fff0eb; display: inline-block; padding: 2px 9px; border-radius: 20px; margin-bottom: 10px;">임팩트투자</div>
+      <p style="font-size: 12px; color: #888; line-height: 1.65; margin-top: 4px; word-break: keep-all;">5/28(목) 《투자의 새로운 규칙》 독서모임을 앞두고 8명의 발제자가 확정되어 각자 챕터를 읽으며 준비하는 시간을 보내고 있습니다. 김정태 대표님이 "발제 내용을 AI로 문건화하자"는 제안도 있었습니다.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ 3. 주간 하이라이트 섹션 라벨 ============ -->
+<div style="padding: 32px 0 18px; display: flex; align-items: center; gap: 12px;">
+  <div style="width: 5px; height: 28px; background: #0195df; border-radius: 2px;"></div>
+  <div>
+    <span style="font-size: 20px; font-weight: 900; color: #0195df; letter-spacing: 1px;">주간 하이라이트</span>
+    <div style="font-size: 13px; color: #aaa; margin-top: 4px;">커뮤니티에서 가장 많은 대화를 이끌어낸 기사</div>
+  </div>
+</div>
+
+<!-- ============ 4. 히어로 카드 2개 ============ -->
+<div class="atcsr-featured-grid">
+  <div class="atcsr-featured-card">
+    <a href="https://news.nate.com/view/20260508n33530" target="_blank" rel="noopener">
+      <div class="atcsr-featured-visual">
+        <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=640&h=400&fit=crop" alt="">
+        <div class="atcsr-featured-overlay">
+          <div class="category">🎨 문화예술 CSR</div>
+          <div class="title">구찌 임팩트 어워드, 문화예술 CSR의 새로운 기준</div>
+        </div>
+      </div>
+      <div class="atcsr-featured-body">
+        <p class="summary">백상예술대상에서 <strong>4년 연속</strong> 운영 중인 구찌 임팩트 어워드는 단순 문화 후원을 넘어, <strong>Gucci Equilibrium</strong> 전략 아래 다양성·포용성·창작 생태계를 지원합니다. 문화예술 CSR도 이제 '얼마나 크게 후원했는가'보다 <strong>어떤 이야기와 함께했는지</strong>가 더 중요해지고 있습니다.</p>
+        <div class="meta">
+          <span>💬 최정숙(블루버드씨)</span>
+          <span class="read-more">원문 읽기 →</span>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="atcsr-featured-card">
+    <a href="https://www.joongangenews.com/news/articleView.html?idxno=519101" target="_blank" rel="noopener">
+      <div class="atcsr-featured-visual">
+        <img src="https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?w=640&h=400&fit=crop" alt="">
+        <div class="atcsr-featured-overlay">
+          <div class="category">💰 임팩트 투자</div>
+          <div class="title">임팩트 투자, 선의를 넘어 신뢰의 언어로</div>
+        </div>
+      </div>
+      <div class="atcsr-featured-body">
+        <p class="summary">국내 임팩트 투자 생태계가 정책금융·사회공헌·ESG·벤처투자 경계에서 신뢰를 잃어가고 있다는 진단입니다. <strong>투자 가설·실사·지표·회수</strong>의 언어가 선의의 언어보다 강해져야 하며, 일회성 지원을 넘어 <strong>문제 해결 주체를 키우는 자본</strong>의 역할이 필요합니다.</p>
+        <div class="meta">
+          <span>💬 이순열(한국사회투자)</span>
+          <span class="read-more">원문 읽기 →</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- ============ 5. 커뮤니티 큐레이션 섹션 라벨 ============ -->
+<div style="padding: 36px 0 18px; display: flex; align-items: center; gap: 12px;">
+  <div style="width: 5px; height: 28px; background: #e6be00; border-radius: 2px;"></div>
+  <div>
+    <span style="font-size: 20px; font-weight: 900; color: #e6be00; letter-spacing: 1px;">커뮤니티 큐레이션</span>
+    <div style="font-size: 13px; color: #aaa; margin-top: 4px;">커뮤니티 멤버가 직접 공유한 기사</div>
+  </div>
+</div>
+
+<!-- ============ 6. 큐레이션 카드 (그룹핑) ============ -->
+<div class="atcsr-curation-grid">
+
+  <!-- 그룹 1: 올댓CSR 전체 -->
+  <details class="atcsr-curation-group" open>
+    <summary style="color: #71c168;">💬 올댓CSR 전체 <span class="count">(10건)</span> <span class="atcsr-curation-toggle" style="background: #71c168;"><span class="atcsr-label-open">펼쳐보기</span><span class="atcsr-label-close">접기</span></span></summary>
+
+    <!-- C1: AI 검색이 바꾸는 ESG 정보 공개 -->
+    <div style="border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); background: #f7faf7; border: 1px solid #d4e8d4; margin-bottom: 12px;">
+      <a href="https://vo.la/3qKeXtR" target="_blank" rel="noopener" style="display: flex; text-decoration: none; color: inherit;">
+        <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=640&h=360&fit=crop" alt="" class="atcsr-curation-thumb">
+        <div style="padding: 16px 18px; flex: 1; min-width: 0;">
+          <div class="atcsr-card-category">🤖 AI·ESG</div>
+          <div class="atcsr-card-title">AI 검색이 바꾸는 ESG 정보 공개의 문법</div>
+          <p class="atcsr-card-summary">기업의 ESG 평판이 지속가능경영보고서가 아닌 <strong>생성형 AI의 답변</strong>을 통해 형성되는 시대입니다. AI가 읽지 못하는 ESG 정보는 온라인에서 <strong>존재하지 않는 정보</strong>가 될 수 있습니다.</p>
+          <div class="atcsr-card-meta">
+            <span>💬 김다인(ESG.ONL)</span>
+            <span style="color: #71c168; font-weight: 600; font-size: 13px;">원문 읽기 →</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- C2: ESG 의제가 된 사이버 보안 -->
+    <div style="border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); background: #f7faf7; border: 1px solid #d4e8d4; margin-bottom: 12px;">
+      <a href="https://vo.la/qw2B89s" target="_blank" rel="noopener" style="display: flex; text-decoration: none; color: inherit;">
+        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=640&h=360&fit=crop" alt="" class="atcsr-curation-thumb">
+        <div style="padding: 16px 18px; flex: 1; min-width: 0;">
+          <div class="atcsr-card-category">🔒 사이버 보안</div>
+          <div class="atcsr-card-title">ESG 의제가 된 사이버 보안</div>
+          <p class="atcsr-card-summary"><strong>ICGN 한국 컨퍼런스 2026</strong>에서 이사회가 반드시 다뤄야 할 지속가능성 리스크로 사이버 보안이 언급되었습니다. 사이버 보안 공백을 채우지 못한 기업에게 <strong>글로벌 자본이 더 이상 관대하지 않을 것</strong>이라는 경고입니다.</p>
+          <div class="atcsr-card-meta">
+            <span>💬 김다인(ESG.ONL)</span>
+            <span style="color: #71c168; font-weight: 600; font-size: 13px;">원문 읽기 →</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- C3: 한국 기업의 물 리스크 -->
+    <div style="border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); background: #f7faf7; border: 1px solid #d4e8d4; margin-bottom: 12px;">
+      <a href="https://kosif.org/bbs/board.php?bo_table=s4_7&wr_id=40" target="_blank" rel="noopener" style="display: flex; text-decoration: none; color: inherit;">
+        <img src="https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=640&h=360&fit=crop" alt="" class="atcsr-curation-thumb">
+        <div style="padding: 16px 18px; flex: 1; min-width: 0;">
+          <div class="atcsr-card-category">💧 물 리스크</div>
+          <div class="atcsr-card-title">한국 기업의 물 리스크·공시 현황과 과제</div>
+          <p class="atcsr-card-summary">CDP WS 응답기업 <strong>49%</strong>가 물 스트레스 지역에서 취수하고, <strong>77%</strong>가 물리적 리스크를 식별했습니다. 물 리스크 건당 재무영향은 <strong>3.3천만원</strong>으로 기후변화(114억) 대비 현저히 낮게 추정되어 과소평가 우려가 있습니다.</p>
+          <div class="atcsr-card-meta">
+            <span>💬 남나현(KoSIF)</span>
+            <span style="color: #71c168; font-weight: 600; font-size: 13px;">원문 읽기 →</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- C4: 시니어 액셀러레이터 -->
+    <div style="border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); background: #f7faf7; border: 1px solid #d4e8d4; margin-bottom: 12px;">
+      <a href="https://www.thebutter.org/news/articleView.html?idxno=2749" target="_blank" rel="noopener" style="display: flex; text-decoration: none; color: inherit;">
+        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=640&h=360&fit=crop" alt="" class="atcsr-curation-thumb">
+        <div style="padding: 16px 18px; flex: 1; min-width: 0;">
+          <div class="atcsr-card-category">👴 시니어 임팩트</div>
+          <div class="atcsr-card-title">시니어 액셀러레이터, 경험을 현재형으로 번역하다</div>
+          <p class="atcsr-card-summary">MYSC가 진행한 시니어 액셀러레이터 양성과정은 시니어를 일회성 멘토가 아닌 <strong>생태계 투입 가능 전문 인력</strong>으로 양성합니다. 대기업 경영혁신 경험부터 로컬 비즈니스까지, <strong>자신의 경험을 현재형으로 번역</strong>해낸 사례가 주목됩니다.</p>
+          <div class="atcsr-card-meta">
+            <span>💬 김정태(MYSC)</span>
+            <span style="color: #71c168; font-weight: 600; font-size: 13px;">원문 읽기 →</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- C5: 코리아 밸류업 지수 -->
+    <div style="border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); background: #f7faf7; border: 1px solid #d4e8d4; margin-bottom: 12px;">
+      <a href="https://vo.la/Ydhvidv" target="_blank" rel="noopener" style="display: flex; text-decoration: none; color: inherit;">
+        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=640&h=360&fit=crop" alt="" class="atcsr-curation-thumb">
+        <div style="padding: 16px 18px; flex: 1; min-width: 0;">
+          <div class="atcsr-card-category">📈 ESG 키워드</div>
+          <div class="atcsr-card-title">코리아 밸류업 지수</div>
+          <p class="atcsr-card-summary">수익성과 주주환원이 우수한 국내 상장기업 <strong>100곳</strong>의 유동시가총액을 가중 산출한 주가지수입니다. 기업의 <strong>지속가능한 가치 창출</strong>과 ESG 경영 성과를 시장이 어떻게 평가하는지 보여주는 지표입니다.</p>
+          <div class="atcsr-card-meta">
+            <span>💬 김다인(ESG.ONL)</span>
+            <span style="color: #71c168; font-weight: 600; font-size: 13px;">원문 읽기 →</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- C6: 스승의 날 ESG 역사 -->
+    <div style="border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); background: #f7faf7; border: 1px solid #d4e8d4; margin-bottom: 12px;">
+      <a href="https://vo.la/OOEZpFV" target="_blank" rel="noopener" style="display: flex; text-decoration: none; color: inherit;">
+        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=640&h=360&fit=crop" alt="" class="atcsr-curation-thumb">
+        <div style="padding: 16px 18px; flex: 1; min-width: 0;">
+          <div class="atcsr-card-category">✏️ ESG 역사</div>
+          <div class="atcsr-card-title">스승의 날에 살펴보는 ESG의 역사와 스승들</div>
+          <p class="atcsr-card-summary">5월 15일 스승의 날을 맞아 ESG의 <strong>선구자이자 스승과 같은 인물들</strong>을 중심으로 ESG의 역사를 짚어봅니다. 유승권 님은 관련 영상도 함께 공유하며 학습 자료를 풍성하게 만들어주셨습니다.</p>
+          <div class="atcsr-card-meta">
+            <span>💬 김다인(ESG.ONL) · 유승권</span>
+            <span style="color: #71c168; font-weight: 600; font-size: 13px;">원문 읽기 →</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- C7: 프로보노 스킬 기반 자원봉사 -->
+    <div style="border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); background: #f7faf7; border: 1px solid #d4e8d4; margin-bottom: 12px;">
+      <a href="https://www.nadotogether.kr/insight/a58e6660-2052-4616-b3ae-19803c63af5a" target="_blank" rel="noopener" style="display: flex; text-decoration: none; color: inherit;">
+        <img src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?w=640&h=360&fit=crop" alt="" class="atcsr-curation-thumb">
+        <div style="padding: 16px 18px; flex: 1; min-width: 0;">
+          <div class="atcsr-card-category">🤝 사회공헌</div>
+          <div class="atcsr-card-title">프로보노 스킬 기반 자원봉사, MZ 세대의 새로운 참여 방식</div>
+          <p class="atcsr-card-summary">젊은 MZ 세대를 겨냥해 확대되고 있는 <strong>재능기부 기반 봉사활동</strong>과 프로보노 스킬 기반 자원봉사의 트렌드를 분석합니다. 기업의 사회공헌 방향 설정에 <strong>실질적 인사이트</strong>를 제공합니다.</p>
+          <div class="atcsr-card-meta">
+            <span>💬 이대우(나도투게더)</span>
+            <span style="color: #71c168; font-weight: 600; font-size: 13px;">원문 읽기 →</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- C8: 장애인 열차 접근성 -->
+    <div style="border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); background: #f7faf7; border: 1px solid #d4e8d4; margin-bottom: 12px;">
+      <a href="https://youtube.com/watch?v=Z2pVA3Uy3qI&si=1hZl9pqBKDeNa397" target="_blank" rel="noopener" style="display: flex; text-decoration: none; color: inherit;">
+        <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=640&h=360&fit=crop" alt="" class="atcsr-curation-thumb">
+        <div style="padding: 16px 18px; flex: 1; min-width: 0;">
+          <div class="atcsr-card-category">♿ 접근성</div>
+          <div class="atcsr-card-title">장애인의 열차 접근성 개선, 영상으로 만나다</div>
+          <p class="atcsr-card-summary">올댓CSR 멤버들의 시청 덕에 <strong>후속편 제작이 결정</strong>된 장애인 열차 접근성 영상입니다. 여름 휴가철을 앞두고 장애인의 <strong>이동권과 접근성 개선</strong>에 대한 지속적 관심이 필요합니다.</p>
+          <div class="atcsr-card-meta">
+            <span>💬 송민섭(실로암시각장애인복지관)</span>
+            <span style="color: #71c168; font-weight: 600; font-size: 13px;">원문 읽기 →</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- C9: 식품안전의 날 -->
+    <div style="border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); background: #f7faf7; border: 1px solid #d4e8d4; margin-bottom: 12px;">
+      <a href="https://vo.la/l5Zx7hR" target="_blank" rel="noopener" style="display: flex; text-decoration: none; color: inherit;">
+        <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=640&h=360&fit=crop" alt="" class="atcsr-curation-thumb">
+        <div style="padding: 16px 18px; flex: 1; min-width: 0;">
+          <div class="atcsr-card-category">🍊 식품안전</div>
+          <div class="atcsr-card-title">모두의 식탁이 평등하고 안전한 사회를 향해</div>
+          <p class="atcsr-card-summary">매년 <strong>5월 14일 식품안전의 날</strong>을 맞아 식품안전에 대한 관심을 높이고, 식품 관련 산업 종사자들의 <strong>안전 의식 고취</strong>를 위한 ESG 관점의 분석을 제공합니다.</p>
+          <div class="atcsr-card-meta">
+            <span>💬 김다인(ESG.ONL)</span>
+            <span style="color: #71c168; font-weight: 600; font-size: 13px;">원문 읽기 →</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- C10: 청년 고용률 KDI -->
+    <div style="border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); background: #f7faf7; border: 1px solid #d4e8d4; margin-bottom: 12px;">
+      <a href="https://mods.go.kr/board.es?mid=a10301010000&bid=210&list_no=445107&act=view&mainXml=Y" target="_blank" rel="noopener" style="display: flex; text-decoration: none; color: inherit;">
+        <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=640&h=360&fit=crop" alt="" class="atcsr-curation-thumb">
+        <div style="padding: 16px 18px; flex: 1; min-width: 0;">
+          <div class="atcsr-card-category">📊 데이터</div>
+          <div class="atcsr-card-title">청년 고용률 등 국가데이터처 자료</div>
+          <p class="atcsr-card-summary"><strong>국가데이터처</strong>에서 발표한 청년 고용률 데이터와 <strong>KDI 국내경제전망</strong> 자료입니다. 기업의 사회공헌 전략 수립과 ESG 보고에 활용 가능한 핵심 거시경제 지표를 담고 있습니다.</p>
+          <div class="atcsr-card-meta">
+            <span>💬 이종일(KT)</span>
+            <span style="color: #71c168; font-weight: 600; font-size: 13px;">원문 읽기 →</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+  </details>
+
+  <!-- 그룹 2: 사회공헌 -->
+  <details class="atcsr-curation-group">
+    <summary style="color: #0195df;">💬 사회공헌 <span class="count">(1건)</span> <span class="atcsr-curation-toggle" style="background: #0195df;"><span class="atcsr-label-open">펼쳐보기</span><span class="atcsr-label-close">접기</span></span></summary>
+
+    <!-- C11: 인도 케랄라 쓰레기 -->
+    <div style="border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); background: #f5f9fd; border: 1px solid #d7e8f5; margin-bottom: 12px;">
+      <a href="https://v.daum.net/v/20260511060217872" target="_blank" rel="noopener" style="display: flex; text-decoration: none; color: inherit;">
+        <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=640&h=360&fit=crop" alt="" class="atcsr-curation-thumb">
+        <div style="padding: 16px 18px; flex: 1; min-width: 0;">
+          <div class="atcsr-card-category">🌏 해외 사례</div>
+          <div class="atcsr-card-title">인도 케랄라주 쓰레기 관리, 벤치마킹할 모델</div>
+          <p class="atcsr-card-summary">"쓰레기처럼 사람들이 보기 싫어하는 문제를 자꾸 숨기면 안 된다. <strong>잘 보이는 곳, 사람들 바로 옆에 둬야</strong> 문제를 더 잘 해결할 수 있다"는 케랄라주의 접근법이 CSR 현장에 시사하는 바가 큽니다.</p>
+          <div class="atcsr-card-meta">
+            <span>💬 이종일(KT) · 진양희</span>
+            <span style="color: #0195df; font-weight: 600; font-size: 13px;">원문 읽기 →</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+  </details>
+
+  <!-- 그룹 3: 지속가능경영 -->
+  <details class="atcsr-curation-group">
+    <summary style="color: #e6be00;">💬 지속가능경영 <span class="count">(5건)</span> <span class="atcsr-curation-toggle" style="background: #e6be00;"><span class="atcsr-label-open">펼쳐보기</span><span class="atcsr-label-close">접기</span></span></summary>
+
+    <!-- C12: 뉴욕주 기후 목표 후퇴 -->
+    <div style="border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); background: #fefcf3; border: 1px solid #f0e4b8; margin-bottom: 12px;">
+      <a href="https://www.esgtoday.com/new-york-governor-strikes-deal-to-push-back-climate-goals/" target="_blank" rel="noopener" style="display: flex; text-decoration: none; color: inherit;">
+        <img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=640&h=360&fit=crop" alt="" class="atcsr-curation-thumb">
+        <div style="padding: 16px 18px; flex: 1; min-width: 0;">
+          <div class="atcsr-card-category">🏛️ 기후 정책</div>
+          <div class="atcsr-card-title">뉴욕주, 기후 목표 후퇴 합의</div>
+          <p class="atcsr-card-summary">뉴욕 주지사가 <strong>기후 목표 시한을 연기</strong>하는 예산 합의를 체결했습니다. 글로벌 기후 정책의 <strong>후퇴 흐름</strong>이 기업의 ESG 전략과 탄소중립 로드맵에 미칠 영향이 주목됩니다.</p>
+          <div class="atcsr-card-meta">
+            <span>💬 유창우(LG CNS Entrue)</span>
+            <span style="color: #e6be00; font-weight: 600; font-size: 13px;">원문 읽기 →</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- C13: 초콜릿 스코어카드 -->
+    <div style="border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); background: #fefcf3; border: 1px solid #f0e4b8; margin-bottom: 12px;">
+      <a href="https://www.chocolatescorecard.com/" target="_blank" rel="noopener" style="display: flex; text-decoration: none; color: inherit;">
+        <img src="https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=640&h=360&fit=crop" alt="" class="atcsr-curation-thumb">
+        <div style="padding: 16px 18px; flex: 1; min-width: 0;">
+          <div class="atcsr-card-category">🍫 공급망 ESG</div>
+          <div class="atcsr-card-title">Chocolate Scorecard 2026</div>
+          <p class="atcsr-card-summary">글로벌 초콜릿 브랜드의 <strong>공급망 지속가능성을 평가</strong>하는 스코어카드입니다. 아동 노동, 산림 파괴, 공정 거래 등 <strong>ESG 핵심 이슈</strong>를 브랜드별로 비교 분석할 수 있습니다.</p>
+          <div class="atcsr-card-meta">
+            <span>💬 유창우(LG CNS Entrue)</span>
+            <span style="color: #e6be00; font-weight: 600; font-size: 13px;">원문 읽기 →</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- C14: ECB 기후 리스크 관리 -->
+    <div style="border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); background: #fefcf3; border: 1px solid #f0e4b8; margin-bottom: 12px;">
+      <a href="https://www.bankingsupervision.europa.eu/press/blog/2026/html/ssm.blog20260508~251184eabc.en.html" target="_blank" rel="noopener" style="display: flex; text-decoration: none; color: inherit;">
+        <img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=640&h=360&fit=crop" alt="" class="atcsr-curation-thumb">
+        <div style="padding: 16px 18px; flex: 1; min-width: 0;">
+          <div class="atcsr-card-category">🏦 금융 규제</div>
+          <div class="atcsr-card-title">ECB, 기후·자연 리스크 관리 5개년 모범사례 발표</div>
+          <p class="atcsr-card-summary">ECB가 <strong>2020~2025년 5개년</strong> 기후·자연 리스크 프로그램의 관찰 결과를 집대성했습니다. 스트레스 테스트, 데이터 거버넌스, 자본 적정성 등 <strong>은행의 ESG 리스크 관리 실무</strong>를 포괄하는 핵심 가이드입니다.</p>
+          <div class="atcsr-card-meta">
+            <span>💬 유창우(LG CNS Entrue)</span>
+            <span style="color: #e6be00; font-weight: 600; font-size: 13px;">원문 읽기 →</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- C15: AA1000 이해관계자 참여 표준 -->
+    <div style="border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); background: #fefcf3; border: 1px solid #f0e4b8; margin-bottom: 12px;">
+      <a href="https://accountability.org/standards/review-of-the-aa1000-stakeholder-engagement-standard" target="_blank" rel="noopener" style="display: flex; text-decoration: none; color: inherit;">
+        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=640&h=360&fit=crop" alt="" class="atcsr-curation-thumb">
+        <div style="padding: 16px 18px; flex: 1; min-width: 0;">
+          <div class="atcsr-card-category">📋 ESG 표준</div>
+          <div class="atcsr-card-title">AA1000 이해관계자 참여 표준 개정 검토</div>
+          <p class="atcsr-card-summary">AccountAbility가 <strong>AA1000 이해관계자 참여 표준(SES)</strong>의 개정 검토를 진행 중입니다. ESG 보고와 <strong>이중 중대성 평가</strong>에서 이해관계자 참여 프로세스의 국제 기준이 달라질 수 있습니다.</p>
+          <div class="atcsr-card-meta">
+            <span>💬 유창우(LG CNS Entrue)</span>
+            <span style="color: #e6be00; font-weight: 600; font-size: 13px;">원문 읽기 →</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- C16: LG CNS ESG 공시 로드맵 -->
+    <div style="border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.05); background: #fefcf3; border: 1px solid #f0e4b8; margin-bottom: 12px;">
+      <a href="https://www.lgcns.com/kr/moa/insight/detail.esg-disclosure-roadmap-2605-2" target="_blank" rel="noopener" style="display: flex; text-decoration: none; color: inherit;">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=640&h=360&fit=crop" alt="" class="atcsr-curation-thumb">
+        <div style="padding: 16px 18px; flex: 1; min-width: 0;">
+          <div class="atcsr-card-category">📊 ESG 공시</div>
+          <div class="atcsr-card-title">ESG 공시 로드맵, 기업 실무 가이드</div>
+          <p class="atcsr-card-summary">LG CNS가 제시하는 <strong>ESG 공시 로드맵</strong>입니다. CSRD, ISSB 등 글로벌 공시 프레임워크에 맞춘 <strong>단계별 대응 전략</strong>과 디지털 전환 방안을 실무 관점에서 정리했습니다.</p>
+          <div class="atcsr-card-meta">
+            <span>💬 유창우(LG CNS Entrue)</span>
+            <span style="color: #e6be00; font-weight: 600; font-size: 13px;">원문 읽기 →</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+  </details>
+
+</div>
+
+<!-- ============ 7. 놓치지 마세요 섹션 라벨 ============ -->
+<div style="padding: 36px 0 18px; display: flex; align-items: center; gap: 12px;">
+  <div style="width: 5px; height: 28px; background: #71c168; border-radius: 2px;"></div>
+  <div>
+    <span style="font-size: 20px; font-weight: 900; color: #71c168; letter-spacing: 1px;">놓치지 마세요</span>
+    <div style="font-size: 13px; color: #aaa; margin-top: 4px;">공모전 · 채용 · 행사 · 캠페인</div>
+  </div>
+</div>
+
+<!-- ============ 8. 액션 카드들 ============ -->
+<div style="padding: 0; display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px;">
+
+  <a href="https://bit.ly/4uJVNCb" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 14px; background: #f7f9f7; border: 1px solid #e2ece2; border-radius: 14px; padding: 16px 18px; text-decoration: none; color: inherit;">
+    <div style="width: 44px; height: 44px; border-radius: 12px; background: #71c168; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+      <span style="font-size: 22px;">🚀</span>
+    </div>
+    <div style="flex: 1; min-width: 0;">
+      <div style="font-size: 12px; font-weight: 700; color: #71c168; margin-bottom: 4px;">공모전</div>
+      <div style="font-size: 15px; font-weight: 700; color: #111; line-height: 1.45;">2026 아산 비영리스타트업 도전 트랙</div>
+      <div style="font-size: 13px; color: #333; margin-top: 4px;">후원금 500만원 + 상금 총 1천만원 · ~6/8 마감</div>
+    </div>
+    <div style="font-size: 13px; color: #71c168; font-weight: 700; flex-shrink: 0;">참여 →</div>
+  </a>
+
+  <a href="https://shorturl.at/1Zv3Z" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 14px; background: #f7f9f7; border: 1px solid #e2ece2; border-radius: 14px; padding: 16px 18px; text-decoration: none; color: inherit;">
+    <div style="width: 44px; height: 44px; border-radius: 12px; background: #71c168; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+      <span style="font-size: 22px;">🎓</span>
+    </div>
+    <div style="flex: 1; min-width: 0;">
+      <div style="font-size: 12px; font-weight: 700; color: #71c168; margin-bottom: 4px;">공모전</div>
+      <div style="font-size: 15px; font-weight: 700; color: #111; line-height: 1.45;">CMK 캠퍼스프러너 1기 모집</div>
+      <div style="font-size: 13px; color: #333; margin-top: 4px;">총 상금 1,000만원 · 대학 재학생/휴학생 · ~5/27 마감</div>
+    </div>
+    <div style="font-size: 13px; color: #71c168; font-weight: 700; flex-shrink: 0;">참여 →</div>
+  </a>
+
+  <a href="https://forms.gle/vFk91numeoxEAVWW9" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 14px; background: #f7f9f7; border: 1px solid #e2ece2; border-radius: 14px; padding: 16px 18px; text-decoration: none; color: inherit;">
+    <div style="width: 44px; height: 44px; border-radius: 12px; background: #71c168; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+      <span style="font-size: 22px;">📊</span>
+    </div>
+    <div style="flex: 1; min-width: 0;">
+      <div style="font-size: 12px; font-weight: 700; color: #71c168; margin-bottom: 4px;">교육</div>
+      <div style="font-size: 15px; font-weight: 700; color: #111; line-height: 1.45;">KoSIF Scope 3 개정 논의 및 실무 교육</div>
+      <div style="font-size: 13px; color: #333; margin-top: 4px;">2026 CDP Scope 3 개정 방향 + 카테고리 1-15 산정 실무</div>
+    </div>
+    <div style="font-size: 13px; color: #71c168; font-weight: 700; flex-shrink: 0;">참여 →</div>
+  </a>
+
+  <a href="https://onoffmix.com/event/342067" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 14px; background: #f7f9f7; border: 1px solid #e2ece2; border-radius: 14px; padding: 16px 18px; text-decoration: none; color: inherit;">
+    <div style="width: 44px; height: 44px; border-radius: 12px; background: #71c168; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+      <span style="font-size: 22px;">💡</span>
+    </div>
+    <div style="flex: 1; min-width: 0;">
+      <div style="font-size: 12px; font-weight: 700; color: #71c168; margin-bottom: 4px;">교육</div>
+      <div style="font-size: 15px; font-weight: 700; color: #111; line-height: 1.45;">기부자관리방안 실무자 역량강화 교육 (무료)</div>
+      <div style="font-size: 13px; color: #333; margin-top: 4px;">한국공익법인협회 · 5/26(화) · 스페이스공(합정)</div>
+    </div>
+    <div style="font-size: 13px; color: #71c168; font-weight: 700; flex-shrink: 0;">참여 →</div>
+  </a>
+
+  <a href="https://tinyurl.com/2dov83zz" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 14px; background: #f7f9f7; border: 1px solid #e2ece2; border-radius: 14px; padding: 16px 18px; text-decoration: none; color: inherit;">
+    <div style="width: 44px; height: 44px; border-radius: 12px; background: #71c168; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+      <span style="font-size: 22px;">🏃</span>
+    </div>
+    <div style="flex: 1; min-width: 0;">
+      <div style="font-size: 12px; font-weight: 700; color: #71c168; margin-bottom: 4px;">캠페인</div>
+      <div style="font-size: 15px; font-weight: 700; color: #111; line-height: 1.45;">2026 FIND ME 트레일러닝 캠페인 참여자 모집</div>
+      <div style="font-size: 13px; color: #333; margin-top: 4px;">아이들과미래재단 × 멀츠에스테틱스 · 자립준비청년 대상 · ~6/4 마감</div>
+    </div>
+    <div style="font-size: 13px; color: #71c168; font-weight: 700; flex-shrink: 0;">참여 →</div>
+  </a>
+
+  <a href="https://event-us.kr/nanumresearch/event/125533" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 14px; background: #f7f9f7; border: 1px solid #e2ece2; border-radius: 14px; padding: 16px 18px; text-decoration: none; color: inherit;">
+    <div style="width: 44px; height: 44px; border-radius: 12px; background: #71c168; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+      <span style="font-size: 22px;">📚</span>
+    </div>
+    <div style="flex: 1; min-width: 0;">
+      <div style="font-size: 12px; font-weight: 700; color: #71c168; margin-bottom: 4px;">행사</div>
+      <div style="font-size: 15px; font-weight: 700; color: #111; line-height: 1.45;">북토크 「필연적 혼자의 시대」</div>
+      <div style="font-size: 13px; color: #333; margin-top: 4px;">사랑의열매 나눔문화연구소 · 5/22(금) 13시 · 김수영 교수</div>
+    </div>
+    <div style="font-size: 13px; color: #71c168; font-weight: 700; flex-shrink: 0;">참여 →</div>
+  </a>
+
+  <a href="https://naver.me/GgUeyzOn" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 14px; background: #f7f9f7; border: 1px solid #e2ece2; border-radius: 14px; padding: 16px 18px; text-decoration: none; color: inherit;">
+    <div style="width: 44px; height: 44px; border-radius: 12px; background: #71c168; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+      <span style="font-size: 22px;">🎯</span>
+    </div>
+    <div style="flex: 1; min-width: 0;">
+      <div style="font-size: 12px; font-weight: 700; color: #71c168; margin-bottom: 4px;">교육</div>
+      <div style="font-size: 15px; font-weight: 700; color: #111; line-height: 1.45;">구세군 모금전문가학교 2차 모집</div>
+      <div style="font-size: 13px; color: #333; margin-top: 4px;">구세군 ESG 대외협력팀 주관</div>
+    </div>
+    <div style="font-size: 13px; color: #71c168; font-weight: 700; flex-shrink: 0;">참여 →</div>
+  </a>
+
+  <a href="https://www.ijm.or.kr/recruit/?q=YToxOntzOjEyOiJrZXl3b3JkX3R5cGUiO3M6MzoiYWxsIjt9&bmode=view&idx=171230897&t=board" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 14px; background: #f7f9f7; border: 1px solid #e2ece2; border-radius: 14px; padding: 16px 18px; text-decoration: none; color: inherit;">
+    <div style="width: 44px; height: 44px; border-radius: 12px; background: #71c168; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+      <span style="font-size: 22px;">💼</span>
+    </div>
+    <div style="flex: 1; min-width: 0;">
+      <div style="font-size: 12px; font-weight: 700; color: #71c168; margin-bottom: 4px;">채용</div>
+      <div style="font-size: 15px; font-weight: 700; color: #111; line-height: 1.45;">IJM Korea Finance Manager 채용</div>
+      <div style="font-size: 13px; color: #333; margin-top: 4px;">국제정의선교회 한국지부</div>
+    </div>
+    <div style="font-size: 13px; color: #71c168; font-weight: 700; flex-shrink: 0;">참여 →</div>
+  </a>
+
+  <a href="https://www.globalcitizen.org/en/projects/fifa-global-citizen-education-fund/apply/" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 14px; background: #f7f9f7; border: 1px solid #e2ece2; border-radius: 14px; padding: 16px 18px; text-decoration: none; color: inherit;">
+    <div style="width: 44px; height: 44px; border-radius: 12px; background: #71c168; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+      <span style="font-size: 22px;">⚽</span>
+    </div>
+    <div style="flex: 1; min-width: 0;">
+      <div style="font-size: 12px; font-weight: 700; color: #71c168; margin-bottom: 4px;">글로벌 공모</div>
+      <div style="font-size: 15px; font-weight: 700; color: #111; line-height: 1.45;">FIFA Global Citizen Education Fund</div>
+      <div style="font-size: 13px; color: #333; margin-top: 4px;">메트라이프 미국재단 후원 · 교육 분야 지원금</div>
+    </div>
+    <div style="font-size: 13px; color: #71c168; font-weight: 700; flex-shrink: 0;">참여 →</div>
+  </a>
+
+  <a href="https://buly.kr/EdvBf0G" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 14px; background: #f7f9f7; border: 1px solid #e2ece2; border-radius: 14px; padding: 16px 18px; text-decoration: none; color: inherit;">
+    <div style="width: 44px; height: 44px; border-radius: 12px; background: #71c168; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+      <span style="font-size: 22px;">🎓</span>
+    </div>
+    <div style="flex: 1; min-width: 0;">
+      <div style="font-size: 12px; font-weight: 700; color: #71c168; margin-bottom: 4px;">교육</div>
+      <div style="font-size: 15px; font-weight: 700; color: #111; line-height: 1.45;">2026 ESG선도대학 수강생 모집 (무료)</div>
+      <div style="font-size: 13px; color: #333; margin-top: 4px;">경기도사회경제원 · 북부/남부 과정</div>
+    </div>
+    <div style="font-size: 13px; color: #71c168; font-weight: 700; flex-shrink: 0;">참여 →</div>
+  </a>
+
+  <a href="https://event-us.kr/m/125948/54057" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 14px; background: #f7f9f7; border: 1px solid #e2ece2; border-radius: 14px; padding: 16px 18px; text-decoration: none; color: inherit;">
+    <div style="width: 44px; height: 44px; border-radius: 12px; background: #71c168; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+      <span style="font-size: 22px;">📐</span>
+    </div>
+    <div style="flex: 1; min-width: 0;">
+      <div style="font-size: 12px; font-weight: 700; color: #71c168; margin-bottom: 4px;">행사</div>
+      <div style="font-size: 15px; font-weight: 700; color: #111; line-height: 1.45;">임팩트 측정과 사회적 가치 웨비나</div>
+      <div style="font-size: 13px; color: #333; margin-top: 4px;">나도투게더 · 6월 · 온라인/오프라인 동시</div>
+    </div>
+    <div style="font-size: 13px; color: #71c168; font-weight: 700; flex-shrink: 0;">참여 →</div>
+  </a>
+
+  <a href="https://buly.kr/90d0KLO" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 14px; background: #f7f9f7; border: 1px solid #e2ece2; border-radius: 14px; padding: 16px 18px; text-decoration: none; color: inherit;">
+    <div style="width: 44px; height: 44px; border-radius: 12px; background: #71c168; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+      <span style="font-size: 22px;">🌍</span>
+    </div>
+    <div style="flex: 1; min-width: 0;">
+      <div style="font-size: 12px; font-weight: 700; color: #71c168; margin-bottom: 4px;">모집</div>
+      <div style="font-size: 15px; font-weight: 700; color: #111; line-height: 1.45;">지파운데이션 해외 물품 지원사업 파트너 모집</div>
+      <div style="font-size: 13px; color: #333; margin-top: 4px;">개발도상국 취약계층 물품 지원 활동</div>
+    </div>
+    <div style="font-size: 13px; color: #71c168; font-weight: 700; flex-shrink: 0;">참여 →</div>
+  </a>
+
+  <a href="https://blog.naver.com/engenim/224281363938" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 14px; background: #f7f9f7; border: 1px solid #e2ece2; border-radius: 14px; padding: 16px 18px; text-decoration: none; color: inherit;">
+    <div style="width: 44px; height: 44px; border-radius: 12px; background: #71c168; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+      <span style="font-size: 22px;">📖</span>
+    </div>
+    <div style="flex: 1; min-width: 0;">
+      <div style="font-size: 12px; font-weight: 700; color: #71c168; margin-bottom: 4px;">캠페인</div>
+      <div style="font-size: 15px; font-weight: 700; color: #111; line-height: 1.45;">청글넷 공저 「청소년과 함께, 여기」 크라우드펀딩</div>
+      <div style="font-size: 13px; color: #333; margin-top: 4px;">전국 청소년활동가 공저 프로젝트 3기</div>
+    </div>
+    <div style="font-size: 13px; color: #71c168; font-weight: 700; flex-shrink: 0;">참여 →</div>
+  </a>
+
+</div>
+
+<!-- ============ 9. 주간 정책 브리핑 ============ -->
+<div style="padding: 24px 0 0;">
+  <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 18px;">
+    <div style="width: 5px; height: 28px; background: #5a6a7a; border-radius: 2px;"></div>
+    <div>
+      <span style="font-size: 20px; font-weight: 900; color: #5a6a7a; letter-spacing: 1px;">주간 정책 브리핑</span>
+      <div style="font-size: 13px; color: #aaa; margin-top: 4px;">행정안전부 지방행정 여론·동향</div>
+    </div>
+  </div>
+  <details class="atcsr-policy-briefing">
+    <summary>📋 정책 브리핑 보기 <span class="atcsr-policy-toggle"><span class="atcsr-label-open">펼쳐보기</span><span class="atcsr-label-close">접기</span></span></summary>
+    <div style="background: #f4f6f8; border: 1px solid #dde2e8; border-top: none; border-radius: 0 0 14px 14px; padding: 20px 22px;">
+
+      <div style="margin-bottom: 20px;">
+        <div style="font-size: 13px; font-weight: 700; color: #5a6a7a; margin-bottom: 10px;">📅 5/11 (월)</div>
+        <div style="font-size: 14px; color: #444; line-height: 1.7; padding-left: 4px;">
+          · <strong>공공부문 비정규직 처우개선 추진</strong><br>
+          <span style="padding-left: 12px; color: #666;">공공기관 기간제 노동자 약 14만 6천명, 1년 미만 계약 50%. 정부 '공정수당' 도입 추진</span><br>
+          · <strong>대전 협업체계로 고향사랑 기부 촉진</strong><br>
+          <span style="padding-left: 12px; color: #666;">지역 4개 기업 참여 '꿈돌이 꾸러미' 출시, 브랜드·식품 세트 3만원 구성</span><br>
+          · <strong>광주 '근로자 휴가비' 지원 추진</strong><br>
+          <span style="padding-left: 12px; color: #666;">정부 10만원+기업 10만원+근로자 20만원 공동 부담, 총 40만원 국내 여행 지원</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <div style="font-size: 13px; font-weight: 700; color: #5a6a7a; margin-bottom: 10px;">📅 5/12 (화)</div>
+        <div style="font-size: 14px; color: #444; line-height: 1.7; padding-left: 4px;">
+          · <strong>나무호 피격 — 정부 '강력 규탄', 공격 주체 특정 후 대응</strong><br>
+          <span style="padding-left: 12px; color: #666;">위성락 안보실장 "민간 선박 공격 용납 불가". 호르무즈 해협에 한국 선박 26척 발묶여 불안 확산</span><br>
+          · <strong>국내 증시 시총 7,000조원 첫 돌파</strong><br>
+          <span style="padding-left: 12px; color: #666;">코스피 7,822(+4.32%), 반도체 호황 견인. 금감원 "과열 아니지만 리스크 점검 필요" 경계</span><br>
+          · <strong>삼성전자 노사, 중노위 사후조정 첫날 입장 차 확인</strong><br>
+          <span style="padding-left: 12px; color: #666;">노조 "성과급 상한 폐지 없으면 파업" 강경. 주한미국상공회의소 "파업 시 한국 경쟁력 흔들려" 우려</span><br>
+          · <strong>2차 고유가 피해지원금 18일부터 지급</strong><br>
+          <span style="padding-left: 12px; color: #666;">소득 하위 70% 약 3,600만명에 10만~25만원. KDI "유가 상승이 소비자물가 최대 1.6%p 상승 가능"</span><br>
+          · <strong>비거주 1주택자 2년 실거주 의무 유예 공식화</strong><br>
+          <span style="padding-left: 12px; color: #666;">양도세 중과 이후 '매물 잠김' 해소 목적. 서울 아파트 매물 이틀새 2,800건 감소</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <div style="font-size: 13px; font-weight: 700; color: #5a6a7a; margin-bottom: 10px;">📅 5/13 (수)</div>
+        <div style="font-size: 14px; color: #444; line-height: 1.7; padding-left: 4px;">
+          · <strong>출퇴근 대중교통 혼잡완화 추진</strong><br>
+          <span style="padding-left: 12px; color: #666;">대중교통 출퇴근 통행량 전쟁 개시 후 전년 대비 4.09% 증가. 교통유발부담금 감면 등 유연화 추진</span><br>
+          · <strong>대전 체육센터 건립 지연으로 장애인 불편 호소</strong><br>
+          <span style="padding-left: 12px; color: #666;">'서구반다비체육센터' 준공 '28.6월로 연기, 장애인 체육 복지 거점 공백 장기화</span><br>
+          · <strong>경남 함안 산업단지 악취 해결책 요구</strong><br>
+          <span style="padding-left: 12px; color: #666;">칠서산단 인근 주민 불편 지속, 악취관리지역 지정에도 실효성 부족</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <div style="font-size: 13px; font-weight: 700; color: #5a6a7a; margin-bottom: 10px;">📅 5/14 (목)</div>
+        <div style="font-size: 14px; color: #444; line-height: 1.7; padding-left: 4px;">
+          · <strong>전국 '낙화축제' 개최 동향</strong><br>
+          <span style="padding-left: 12px; color: #666;">세종 낙화축제·경남 합안 낙화놀이·경북 하회선유줄불놀이 등 전통 불꽃 문화 행사 확산</span><br>
+          · <strong>'금연 아파트' 실효성 지적</strong><br>
+          <span style="padding-left: 12px; color: #666;">전국 3,921곳으로 확대되었으나 흡연 적발 시 10만원 이하 과태료에 그쳐 실효성 논란</span><br>
+          · <strong>충북·충남 아동친화업소 지원 사업</strong><br>
+          <span style="padding-left: 12px; color: #666;">충북 영동 '영동키즈오키존' 참여 업소 모집, 충남 천안 '아이 러브 스토어' 업소당 50만원 지원</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 0;">
+        <div style="font-size: 13px; font-weight: 700; color: #5a6a7a; margin-bottom: 10px;">📅 5/15 (금)</div>
+        <div style="font-size: 14px; color: #444; line-height: 1.7; padding-left: 4px;">
+          · <strong>광주 서구 '천원국수' 착한일자리 프로젝트</strong><br>
+          <span style="padding-left: 12px; color: #666;">민·관 협력 1석 3조 프로젝트. 우리밀 국수를 천원에 판매, 어르신 일자리 창출·지역 소비 촉진·나눔 문화 확산</span><br>
+          · <strong>제주 생태계서비스 지불제 계약 추진</strong><br>
+          <span style="padding-left: 12px; color: #666;">전국 최초 조례 제정. 25개 마을 참여 확대, 생태 자산 보전과 주민 보상을 연계하는 새 환경 모델</span><br>
+          · <strong>강원 중앙-지방 협력 '통합 관사' 조성</strong><br>
+          <span style="padding-left: 12px; color: #666;">영월군 방치 건물을 청년 공무원 관사로 리모델링, 전국 첫 사례. 28년까지 30호실 계획</span>
+        </div>
+      </div>
+
+    </div>
+  </details>
+</div>
+
+<!-- ============ 10. 공유된 자료 ============ -->
+<div style="padding: 12px 0 0;">
+  <div style="font-size: 14px; font-weight: 700; color: #888; margin-bottom: 12px;">📎 공유된 자료</div>
+  <div style="display: flex; flex-direction: column; gap: 8px;">
+
+    <a class="atcsr-shared-file" href="https://raw.githubusercontent.com/all-that-csr/asset/main/260515/pdf/ssm.thematicreviewcercompendiumgoodpractices052026.en.pdf" target="_blank" rel="noopener">
+      <span style="font-size: 18px; flex-shrink: 0;">📄</span>
+      <div style="flex: 1; min-width: 0;">
+        <div style="font-size: 14px; font-weight: 700; color: #222; line-height: 1.4;">ECB 기후·자연 리스크 관리 모범사례 (169p)</div>
+        <div style="font-size: 12px; color: #999; margin-top: 3px;">2020-25년 5개년 프로그램 관찰 결과 집대성. 전략·거버넌스·리스크 관리 실무 가이드</div>
+      </div>
+      <div class="atcsr-shared-file-info">
+        <div style="font-size: 11px; color: #bbb;">ssm.themat….pdf</div>
+        <div style="font-size: 11px; color: #ccc; margin-top: 2px;">5/13 공유 · 다운로드 →</div>
+      </div>
+    </a>
+
+    <a class="atcsr-shared-file" href="https://raw.githubusercontent.com/all-that-csr/asset/main/260515/pdf/ssm.202605_ECBreport_on_good_practices_for_climate_and_nature_stress_testing.en.pdf" target="_blank" rel="noopener">
+      <span style="font-size: 18px; flex-shrink: 0;">📄</span>
+      <div style="flex: 1; min-width: 0;">
+        <div style="font-size: 14px; font-weight: 700; color: #222; line-height: 1.4;">ECB 기후·자연 리스크 스트레스 테스트 모범사례 (78p)</div>
+        <div style="font-size: 12px; color: #999; margin-top: 3px;">신용 리스크 모델링, 전환·물리적 리스크 시나리오, 자연 리스크 통합 접근법</div>
+      </div>
+      <div class="atcsr-shared-file-info">
+        <div style="font-size: 11px; color: #bbb;">ssm.20260….pdf</div>
+        <div style="font-size: 11px; color: #ccc; margin-top: 2px;">5/13 공유 · 다운로드 →</div>
+      </div>
+    </a>
+
+    <a class="atcsr-shared-file" href="https://raw.githubusercontent.com/all-that-csr/asset/main/260515/pdf/090166e52d5fe3c7.pdf" target="_blank" rel="noopener">
+      <span style="font-size: 18px; flex-shrink: 0;">📄</span>
+      <div style="flex: 1; min-width: 0;">
+        <div style="font-size: 14px; font-weight: 700; color: #222; line-height: 1.4;">EU ETS 배출권 벤치마크 2026-2030 개정 초안</div>
+        <div style="font-size: 12px; color: #999; margin-top: 3px;">EU 탄소배출권 무상할당 벤치마크 54개 제품별 개정치. 연간 감축률 6~24% 적용</div>
+      </div>
+      <div class="atcsr-shared-file-info">
+        <div style="font-size: 11px; color: #bbb;">090166e52….pdf</div>
+        <div style="font-size: 11px; color: #ccc; margin-top: 2px;">5/13 공유 · 다운로드 →</div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<!-- ============ 11. 구분선 + 함께 해주신 분들 ============ -->
+<div style="width: 100%; height: 1px; background: #e0e0e0; margin-top: 28px;"></div>
+
+<div style="margin: 28px 0 12px; padding: 24px 0 0;">
+  <div class="atcsr-contrib-label"><strong>32명</strong>의 멤버가 이번 매거진을 함께 만들었어요</div>
+  <div>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>김다인 <span class="atcsr-contrib-org">ESG.ONL</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>남나현 <span class="atcsr-contrib-org">한국사회책임투자포럼</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>최정숙 <span class="atcsr-contrib-org">블루버드씨</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>이순열 <span class="atcsr-contrib-org">한국사회투자</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>김정태 <span class="atcsr-contrib-org">MYSC</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>이대우 <span class="atcsr-contrib-org">나도투게더</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>송민섭 <span class="atcsr-contrib-org">실로암시각장애인복지관</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>이종일 <span class="atcsr-contrib-org">KT</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(230,190,0,0.08); border-color: rgba(230,190,0,0.3);"><span class="atcsr-contrib-dot" style="background: #e6be00;"></span>유창우 <span class="atcsr-contrib-org">LG CNS Entrue</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>유승권</span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>류태림 <span class="atcsr-contrib-org">아산나눔재단</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>이제우 <span class="atcsr-contrib-org">위에이지</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>안성현 <span class="atcsr-contrib-org">아이들과미래재단</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>박미희 <span class="atcsr-contrib-org">나눔문화연구소</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>장규영 <span class="atcsr-contrib-org">구세군</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>한성연 <span class="atcsr-contrib-org">한국공익법인협회</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>황애경 <span class="atcsr-contrib-org">메트라이프생명재단</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>이정혁 <span class="atcsr-contrib-org">IJM Korea</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>정현화 <span class="atcsr-contrib-org">링키지랩</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>유은아 <span class="atcsr-contrib-org">지파운데이션</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>박이슬</span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>강하라 <span class="atcsr-contrib-org">경기도자원봉사센터</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>홍봉식 <span class="atcsr-contrib-org">구세군</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>공유선 <span class="atcsr-contrib-org">언더독스</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>손민호 <span class="atcsr-contrib-org">유니세프</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>지은희 <span class="atcsr-contrib-org">비전랩</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>김길숙 <span class="atcsr-contrib-org">스프링샤인</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>김성훈 <span class="atcsr-contrib-org">아름다운가게</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>권미진 <span class="atcsr-contrib-org">아름다운가게</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(113,193,104,0.08); border-color: rgba(113,193,104,0.25);"><span class="atcsr-contrib-dot" style="background: #71c168;"></span>정경희 <span class="atcsr-contrib-org">연제FM</span></span>
+    <span class="atcsr-contrib-chip" style="background: rgba(1,149,223,0.08); border-color: rgba(1,149,223,0.25);"><span class="atcsr-contrib-dot" style="background: #0195df;"></span>진양희</span>
+    <span class="atcsr-contrib-chip" style="background: rgba(230,190,0,0.08); border-color: rgba(230,190,0,0.3);"><span class="atcsr-contrib-dot" style="background: #e6be00;"></span>윤지현</span>
+  </div>
+</div>
+
+<!-- ============ 12. FOOTER ============ -->
+<div class="atcsr-footer" style="margin: 16px 0 0; background: #f5f5f5; border-radius: 16px; padding: 28px 28px 24px;">
+  <div class="atcsr-footer-inner" style="display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+    <img src="https://raw.githubusercontent.com/all-that-csr/asset/main/logo/logo-typeB.png" alt="All-That CSR" style="height: 70px; width: auto; flex-shrink: 0;">
+    <div class="atcsr-footer-text">
+      <div style="font-size: 13px; color: #999; margin-bottom: 4px;">커뮤니티로 만드는 사회적 책임</div>
+      <div style="font-size: 12px; color: #bbb; margin-bottom: 8px;">2026년 5월 2주차 (5/11~5/15)</div>
+      <div style="font-size: 11px; color: #ccc;">&copy; 2026 All That CSR. All rights reserved.</div>
+    </div>
+  </div>
+  <div style="display: flex; justify-content: center; gap: 6px; margin-top: 20px;">
+    <div style="width: 6px; height: 6px; border-radius: 50%; background: #0195df;"></div>
+    <div style="width: 6px; height: 6px; border-radius: 50%; background: #ffd200;"></div>
+    <div style="width: 6px; height: 6px; border-radius: 50%; background: #71c168;"></div>
+  </div>
+</div>
+
+</div>
+</div>
